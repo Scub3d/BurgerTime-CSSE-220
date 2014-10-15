@@ -1,0 +1,36 @@
+/**
+ * 
+ */
+package burgertime;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class StatusPanel extends JPanel{
+	private static String[] LABEL_NAMES = {"Lives: ", "Score: ", "Pepper: "};
+	private static int[] INITIAL_VALUES ={5, 0, 5};
+	
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public StatusPanel(GameWorld world) {
+		// TODO Auto-generated constructor stub
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		for(int k=0; k<LABEL_NAMES.length;k++){
+			JLabel label = new JLabel();
+			label.setText(LABEL_NAMES[k]+INITIAL_VALUES[k]);
+			add(label);
+		}
+	}
+
+}

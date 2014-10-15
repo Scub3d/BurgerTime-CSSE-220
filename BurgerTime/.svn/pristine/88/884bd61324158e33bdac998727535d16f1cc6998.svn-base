@@ -1,0 +1,284 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ * 
+ * @author havensid. Created Feb 6, 2014.
+ */
+public class GameWorldComponent extends JComponent implements Temporal {
+	private static final int FRAMES_PER_SECOND = 30;
+	private static final long INTERVAL_MS = 1000 / FRAMES_PER_SECOND;
+	private static boolean[][] boMap;
+	private CopyOfGameWorldEnvironment map;
+	public Hero hero;
+	private ArrayList<Rectangle2D> position;
+	private boolean hasShownNullErrorMessage = false;
+	
+
+	// private Level level;
+
+	public GameWorldComponent(CopyOfGameWorldEnvironment map) {
+		this.map = map;
+		// this.level = new Level();
+		// this.level.loadLevel();
+
+		// this.hero = new Hero();
+		Runnable repainter = new Runnable() {
+			@Override
+			public void run() {
+				// Periodically asks Java to repaint this component
+				try {
+					while (true) {
+						Thread.sleep(INTERVAL_MS);
+						repaint();
+					}
+				} catch (InterruptedException exception) {
+					// Stop when interrupted
+				}
+			}
+		};
+		new Thread(repainter).start();
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+
+		if (CopyOfGameWorldEnvironment.levelCleared()) {
+			clearLevel(g2);
+			this.drawMap(g2, CopyOfGameWorldEnvironment.levels
+					.get(CopyOfGameWorldEnvironment.levelChooser));
+			this.drawBurger(g2, CopyOfGameWorldEnvironment.levels
+					.get(CopyOfGameWorldEnvironment.levelChooser).getBurger());
+		} else {
+			this.drawMap(g2, CopyOfGameWorldEnvironment.level);
+			this.drawBurger(g2, CopyOfGameWorldEnvironment.level.getBurger());
+		}
+
+		List<Drawable> drawableGuards = this.map.getDrawableGuards();
+		for (Drawable d : drawableGuards) {
+			drawDrawable(g2, d);
+		}
+
+		drawHero(g2, this.map.getHero());
+	}
+
+
+	private void drawHero(Graphics2D g2, Hero hero) {
+		g2.setColor(hero.getColor());
+		Shape shape = hero.getShape();
+		g2.fill(shape);
+	}
+
+	/**
+	 * This helper method draws the given drawable object on the given graphics
+	 * area.
+	 * 
+	 * @param g2
+	 *            the graphics area on which to draw
+	 * @param d
+	 *            the drawable object
+	 */
+	private void drawDrawable(Graphics2D g2, Drawable d) {
+		g2.setColor(Guard.getGuardColor());
+		Shape shape = d.getShape();
+		g2.fill(shape);
+	}
+
+	/**
+	 * Displays an error message explaining that the Ball's color/shape was null
+	 * so it could not be drawn. Show the message only once per component.
+	 */
+	private void showNullPointerMessage(String nullAttribute, Drawable d) {
+		if (!this.hasShownNullErrorMessage) {
+			this.hasShownNullErrorMessage = true;
+			String message = "I could not draw this Drawable object of type "
+					+ d.getClass().getName() + " because its " + nullAttribute
+					+ " is null.\n";
+			JOptionPane.showMessageDialog(null, message,
+					"Null pointer exception", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void drawPathway(Graphics2D g2, Rectangle2D pathSegment) {
+		g2.setColor(this.map.getColor());
+		g2.fill(pathSegment);
+	}
+
+	private char[] objs = { '-', 'H', '_', '~', '=', 't', 'l', 'm', 'b' };
+	private Color[] colors = { Color.BLACK, Color.RED, Color.CYAN,
+			Color.BLUE, Color.PINK };
+	
+
+	private void drawMap(Graphics2D g2, Level level) {
+		char[][] map = level.readFile();
+		GameWorldComponent.boMap = new boolean[map.length][map[0].length];
+		//g2.setBackground(Color.BLACK);
+		Point[][] coords = level.setCoors();
+		for(int i = 0; i < map.length; i++) {
+			for(int j = 0; j < map[0].length; j++) {
+				for(int k = 0; k < this.objs.length; k++) {
+					if(map[i][j] == this.objs[k]) {
+						if(map[i][j] == '_') {
+							g2.setColor(this.colors[0]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y), 24, 14);
+							g2.setColor(this.colors[2]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24, 10);
+						} else if(map[i][j] == '~') {
+							g2.setColor(this.colors[1]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y), 24, 14);
+							g2.setColor(this.colors[2]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24, 10);
+						} else if(map[i][j] == '=') {
+							g2.setColor(this.colors[0]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y), 24, 14);
+							g2.setColor(this.colors[4]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24, 10);
+						} else if(map[i][j]=='H'){
+							g2.setColor(this.colors[k]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y), 24, 24);
+						}else if(map[i][j]=='t'){
+//							g2.setColor(Color.pink);
+//							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24,14);
+							g2.setColor(this.colors[2]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24, 10);
+						}else if(map[i][j]=='l'){
+//							g2.setColor(Color.pink);
+//							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24,14);
+							g2.setColor(this.colors[2]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24, 10);
+						}else if(map[i][j]=='m'){
+//							g2.setColor(Color.pink);
+//							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24,14);
+							g2.setColor(this.colors[2]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24, 10);
+						}else if(map[i][j]=='b'){
+//							g2.setColor(Color.pink);
+//							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14), 24,14);
+							g2.setColor(this.colors[2]);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y+14 ), 24, 10);
+						}
+						else if(map[i][j]=='-')
+						{
+							g2.setColor(Color.BLACK);
+							g2.fillRect(coords[i][j].x, (int) (coords[i][j].y), 24, 24);
+						}
+						if(map[i][j] == '-' || map[i][j] == '=') {
+							GameWorldComponent.boMap[i][j] = false;
+							//g2.setColor(Color.MAGENTA);
+							Ellipse2D coorPoint2 = new Ellipse2D.Double(j*24,i*24,24,24);
+							//g2.fill(coorPoint2);
+						} else {
+							GameWorldComponent.boMap[i][j] = true;
+							g2.setColor(Color.WHITE);
+							Ellipse2D coorPoint = new Ellipse2D.Double(j*24,i*24,24,24);
+							g2.fill(coorPoint);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void clearLevel(Graphics2D g2) {
+		g2.clearRect(0, 0, getWidth(), getHeight());
+		//g2.setBackground(Color.BLACK);
+	}
+
+	 private void drawBurger(Graphics2D g2, ArrayList<Burger> burgers) {
+		 ArrayList<Burger> burgersToDraw = burgers;
+		 for(int k = 0; k<burgersToDraw.size(); k++){
+			 g2.setColor(burgersToDraw.get(k).getColor());
+			 g2.fillRect(burgersToDraw.get(k).getX(), burgersToDraw.get(k).getY(), burgersToDraw.get(k).width, burgersToDraw.get(k).height);
+		 }
+	 }
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see burgertime.Temporal#timePassed()
+	 */
+	// @Override
+	// public void timePassed() {
+	// if (!this.hero.pepperDeployed) {
+	// if (this.hero.contactWithGuard(this.hero.getHeroCorners(0, 0))) {
+	// this.hero.die();
+	// }
+	// }
+	// if (this.hero.isDead()) {
+	// this.resetCharacters();
+	// this.hero.heroState = false;
+	// }
+	//
+	// }
+	//
+	// public void resetCharacters() {
+	// this.hero.resetPosition();
+	// for (int i = 0; i < guard.length; i++) {
+	// ((Guard) this.guard[i]).resetPosition();
+	// }
+	// }
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see burgertime.Temporal#die()
+	 */
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see burgertime.Temporal#setIsPaused(boolean)
+	 */
+	@Override
+	public void setIsPaused(boolean isPaused) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see burgertime.Temporal#getIsPaused()
+	 */
+	@Override
+	public boolean getIsPaused() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see burgertime.Temporal#timePassed()
+	 */
+	@Override
+	public void timePassed() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

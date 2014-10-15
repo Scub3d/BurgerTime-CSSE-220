@@ -1,0 +1,104 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+
+
+/**
+ * Base abstract class for characters in world.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public abstract class BurgTimeChar implements Drawable, Temporal, Relocatable{
+	private double height;
+	private double width;
+	private Point2D centerPoint;
+	protected Environment world;
+	private boolean isPaused = false;
+	
+	
+	public BurgTimeChar(Environment world) {
+		this(world, new Point2D.Double());
+	}
+	
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 */
+	public  BurgTimeChar(Environment world, Point2D centerPoint){
+		this.height = 32;
+		this.width=16;
+		this.world = world;
+		this.centerPoint = centerPoint;
+	}
+	
+	protected void setCenterPoint(Point2D centerPoint) {
+		this.centerPoint = centerPoint;
+	}
+
+	protected Environment getWorld() {
+		return this.world;
+	}
+	
+	//Temporal Interface
+	
+	@Override
+	public void timePassed() {
+		if(!isPaused)
+		{
+			updatePosition();
+		}
+	}
+
+	@Override
+	public void die() {
+		this.world.removeChar(this);
+	}
+
+	@Override
+	public boolean getIsPaused() {
+		return this.isPaused;
+	}
+
+	@Override
+	public void setIsPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
+	
+	//Drawable Interface
+	public Shape getShape() {
+		double x = getCenterPoint().getX();
+		double y = getCenterPoint().getY();
+		return new Ellipse2D.Double(x/2,y/2, this.width, this.height);
+	}
+	
+	// Relocatable interface
+
+	/**
+	 * Re-centers this ball at the given point.
+	 * 
+	 * @param point
+	 */
+	@Override
+	public void moveTo(Point2D point) {
+		this.centerPoint = point;
+		setCenterPoint(this.centerPoint);
+	}
+
+	/**
+	 * Returns the center point of this object.
+	 * 
+	 * @return the center point
+	 */
+	@Override
+	public Point2D getCenterPoint() {
+		return this.centerPoint;
+	}
+	
+	public abstract void updatePosition();
+}

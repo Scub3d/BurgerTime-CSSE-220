@@ -1,0 +1,122 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
+import java.sql.Time;
+
+import javax.swing.Timer;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class Guard extends BurgTimeChar{
+	private double velocityX = 1;
+	private double velocityY = 1;
+	private double centerX;
+	private double centerY;
+	private Point2D centerPoint;
+	private static Color color = Color.MAGENTA;
+	private Color sprayedColor = Color.GRAY;
+	final int twoSeconds = 2000;
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public Guard(Environment world, double centerX,double centerY) {
+		super(world);
+		this.centerX = centerX;
+		this.centerY = centerY;
+		setCenterPoint(this.centerPoint = new Point2D.Double(this.centerX,this.centerY));
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	
+	
+	
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param centerX2
+	 * @param centerY2
+	 * @return
+	 */
+	private Point2D Point2D(double centerX2, double centerY2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.BurgTimeChar#updatePosition()
+	 */
+	
+	@Override
+	public void updatePosition() {
+		int tempX = (int) (Hero.getCenterY() / 24.0);
+		int tempY = (int) (Hero.getCenterX() / 23.0);
+		//System.out.println(tempX + ", " + tempY);
+		//System.out.println("Updating");
+//		if(Hero.getCenterY() < this.centerY && CopyOfGameWorldEnvironment.level.canGoUp(tempX, tempY))
+//		{
+//			this.centerY = this.centerY - this.velocityY ;
+//		}
+//		else if(Hero.getCenterY() > this.centerY && CopyOfGameWorldEnvironment.level.canGoDown(tempX, tempY))  
+//		{
+//			this.centerY = this.centerY + this.velocityY;
+//		}
+//		if(Hero.getCenterX() < this.centerX && CopyOfGameWorldEnvironment.level.canGoLeft(tempX, tempY))
+//		{
+//			this.centerX = this.centerX - this.velocityX;
+//		}
+//		else if(Hero.getCenterX() > this.centerX && CopyOfGameWorldEnvironment.level.canGoRight(tempX, tempY))
+//		{
+//			this.centerX = this.centerX + this.velocityX;
+//		}
+//		setCenterPoint(this.centerPoint = new Point2D.Double(this.centerX,this.centerY));
+		//System.out.println(isPaused);
+		
+	}
+	public void setCenterPoint(Point2D point){
+		//System.out.println("Setting point");
+		super.setCenterPoint(point);
+		this.centerX = point.getX();
+		this.centerY = point.getY();
+	}
+	public void isSprayed() throws InterruptedException{
+		final Timer timer = new Timer(twoSeconds, new ActionListener() {
+		    public void actionPerformed(ActionEvent evt) {
+		            setIsPaused(false);
+		            setColour(Color.MAGENTA);
+		    }    
+		});
+		this.setColour(this.sprayedColor);
+		setIsPaused(true);
+		this.isPaused = true;
+		timer.start();
+
+	}
+	
+	public static Color getColour(){
+		return color;
+	}
+	public static void setColour(Color colour){
+		color = colour;
+	}
+}

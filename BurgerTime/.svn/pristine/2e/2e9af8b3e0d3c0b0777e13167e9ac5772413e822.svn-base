@@ -1,0 +1,97 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public class Hero extends BurgTimeChar {
+	 private static double velocityX = 0;
+	 private static double velocityY = 0;
+	 private static double centerX;
+	 private static double centerY;
+	 private Point2D centerPoint;
+	 Color color = Color.WHITE;
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public Hero(Environment world,double centerX, double centerY) {
+		super(world);
+		Hero.centerX = centerX;
+		Hero.centerY = centerY;
+		setCenterPoint(this.centerPoint = new Point2D.Double(Hero.centerX,Hero.centerY));
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.Drawab le#getColor()
+	 */
+	
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.BurgTimeChar#updatePosition()
+	 */
+	
+	@Override
+	public void updatePosition() {
+		int cornerCount = 1;
+		for(Guard c: CopyOfGameWorldEnvironment.guards)
+		{
+			//System.out.println("looping");
+			if(Hero.centerX + this.width / 2 >= c.getCenterPoint().getX() - this.width / 2 && Hero.centerX - this.width / 2 <= c.getCenterPoint().getX() + this.width / 2) {
+				if(Hero.centerY + this.height / 2 >= c.getCenterPoint().getY() - this.height / 2 && Hero.centerY  - this.height / 2 <= c.getCenterPoint().getY() + this.height / 2 ) {
+					System.out.println("You died");
+					Hero.centerX = 300;
+					Hero.centerY = 300;
+					setCenterPoint(this.centerPoint = new Point2D.Double(Hero.centerX,Hero.centerY));
+					int lifeCount = StatusPanel.getLives();
+					StatusPanel.setLives(lifeCount--);
+					
+					for(int i=0; i<4; i++)
+					{
+						CopyOfGameWorldEnvironment.guards.get(i).setCenterPoint(CopyOfGameWorldEnvironment.level.getCorners(i+1));
+					}
+				}
+			}
+		}
+		Hero.centerX += Hero.velocityX;
+		Hero.centerY += Hero.velocityY;
+		setCenterPoint(this.centerPoint = new Point2D.Double(Hero.centerX,Hero.centerY));
+	}
+	
+	public static double getCenterY() {
+		return centerY;
+	}
+	public static double getCenterX() {
+		return centerX;
+	}
+	public static void setVelocityY(double velocity) {
+		Hero.velocityY = velocity;
+	}
+	public static void setVelocityX(double velocity) {
+		Hero.velocityX = velocity;
+	}
+	public Point2D getCenterPoint() {
+		return this.centerPoint;
+	}
+	public static double getWidth() {
+		return width;
+	}
+	public static double getHeight() {
+		return height;
+	}
+}

@@ -1,0 +1,123 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author maas.
+ *         Created Feb 16, 2014.
+ */
+public class KeyHandler extends JPanel{
+	public KeyHandler(){
+		KeyListener listener = new KeyListener(){
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode())); 
+				int key = e.getKeyCode();
+				if(e.getKeyChar() == 'u' || e.getKeyChar() == 'U')
+		    	{
+		    		//Next level
+					System.out.println("Next Level");
+		    	}
+		    	else if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+		    	{
+		    		//Previous level
+		    		System.out.println("Previous Level");
+		    	}
+		    	else if(e.getKeyChar() == 'p' || e.getKeyChar() == 'P')
+		    	{
+		    		//boolean isPaused = temporalObj.getIsPaused();
+					//isPaused = !isPaused;
+		    		System.out.println("Pause");
+		    	}
+				if(key == KeyEvent.VK_UP)
+				{
+					System.out.println("UP");
+					Hero.setVelocityY(-0.1);
+					System.out.println(Hero.getVelocityY());
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+		    	{
+		    		System.out.println("LEFT");
+		    		Hero.setVelocityX(-0.1);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+		    	{
+		    		System.out.println("RIGHT");
+		    		Hero.setVelocityX(0.1);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+		    	{
+		    		System.out.println("Down");
+		    		Hero.setVelocityY(0.1);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+		    	{
+		    		//spray the pepper spray
+		    		//pepperSprayCount --;
+//		    		if(enemy.getCenterPoint().getX() == chef.getCenterPoint().getX() + 1)
+//		    		{
+//		    			enemy.die();
+//		    		}
+	    		}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+				int key = e.getKeyCode();
+				if(key == KeyEvent.VK_UP)
+				{
+					System.out.println("UP");
+					Hero.setVelocityY(0);
+					System.out.println(Hero.getVelocityY());
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+		    	{
+		    		System.out.println("LEFT");
+		    		Hero.setVelocityX(0);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+		    	{
+		    		System.out.println("RIGHT");
+		    		Hero.setVelocityX(0);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+		    	{
+		    		System.out.println("Down");
+		    		Hero.setVelocityY(0);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+		    	{
+		    		//spray the pepper spray
+		    		//pepperSprayCount --;
+//		    		if(enemy.getCenterPoint().getX() == chef.getCenterPoint().getX() + 1)
+//		    		{
+//		    			enemy.die();
+//		    		}
+	    		}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		addKeyListener(listener);
+		setFocusable(true);
+		
+	}
+
+}

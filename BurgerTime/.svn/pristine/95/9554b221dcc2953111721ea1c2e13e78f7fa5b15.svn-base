@@ -1,0 +1,112 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public class GameWorldEnvironment implements Drawable, Temporal{
+	private static final long UPDATE_INTERVAL_MS=10;
+	private Shape background;
+	private boolean isPaused = false;
+	public ArrayList<Rectangle2D> path;
+	private ArrayList<Drawable> movingParts;
+	
+	
+	public GameWorldEnvironment(){
+		this.path = new ArrayList<Rectangle2D>();
+		this.addPathway();
+	}
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 */
+	private void addPathway() {
+		this.path.add(new Rectangle2D.Double(50,60,560,10));
+		this.path.add(new Rectangle2D.Double(325,120,290,10));
+		this.path.add(new Rectangle2D.Double(50,150,175,10));
+		this.path.add(new Rectangle2D.Double(195,180,290,10));
+		this.path.add(new Rectangle2D.Double(50,250,305,10));
+		this.path.add(new Rectangle2D.Double(475,260,140,10));
+		this.path.add(new Rectangle2D.Double(50,360,565,10));
+		
+		this.path.add(new Rectangle2D.Double(50,60,30,310));
+		this.path.add(new Rectangle2D.Double(130,150,30,100));
+		this.path.add(new Rectangle2D.Double(195,60,30,130));
+		this.path.add(new Rectangle2D.Double(195,260,30,100));
+		this.path.add(new Rectangle2D.Double(260,60,30,130));
+		this.path.add(new Rectangle2D.Double(325,60,30,300));
+		this.path.add(new Rectangle2D.Double(390,190,30,170));
+		this.path.add(new Rectangle2D.Double(455,60,30,300));
+		this.path.add(new Rectangle2D.Double(530,130,30,130));
+		this.path.add(new Rectangle2D.Double(585,60,30,60));
+		this.path.add(new Rectangle2D.Double(585,270,30,90));
+		
+		this.path.add(new Rectangle2D.Double(80,450,115,5));
+		this.path.add(new Rectangle2D.Double(220,450,110,5));
+		this.path.add(new Rectangle2D.Double(355,450,105,5));
+		this.path.add(new Rectangle2D.Double(485,450,105,5));
+		
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#timePassed()
+	 */
+	@Override
+	public void timePassed() {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#die()
+	 */
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#setIsPaused(boolean)
+	 */
+	@Override
+	public void setIsPaused(boolean isPaused) {
+		// TODO Auto-generated method stub
+		
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#getIsPaused()
+	 */
+	@Override
+	public boolean getIsPaused() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	@Override
+	public Color getColor() {
+		return Color.cyan;
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getShape()
+	 */
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return this.path.get(0);
+	}
+	
+	
+	
+}

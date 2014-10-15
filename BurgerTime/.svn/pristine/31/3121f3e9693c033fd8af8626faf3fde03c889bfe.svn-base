@@ -1,0 +1,115 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 18, 2014.
+ */
+public class Burger implements Drawable{
+	protected int width=24;
+	protected int height=14;
+	private Color color;
+	private int xCoor;
+	private int yCoor;
+	private boolean isStepOn;
+	protected Rectangle2D.Double burgerPiece;
+	private char part;
+	
+//	private int xCenter;
+//	private int yCenter;
+
+	
+	public Burger(int col, int row, char type){
+		this.burgerPiece = new Rectangle2D.Double(col, row, this.width,this.height);
+		this.xCoor = col;
+		this.yCoor = row;
+		
+		this.part = type;
+		if(this.part =='t'||this.part=='b'){
+			this.color = Color.orange;
+		}else if(this.part == 'l'){
+			this.color = Color.green;
+		}else if(this.part=='m'){
+			this.color= new Color(160,82,45);
+		}
+//		setCenters(row, col, this.width, this.height);
+	}
+	
+	
+//	private void setCenters(int row, int col, int width2, int height2) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+	public void updatePosition(){
+		this.burgerPiece= new Rectangle2D.Double(this.xCoor,this.yCoor, this.width, this.height);
+	}
+	
+	
+	public int getX(){
+		return this.xCoor;
+	}
+	
+	public int getY(){
+		return this.yCoor;
+	}
+	
+	public char getType(){
+		return this.part;
+	}
+	
+
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getShape()
+	 */
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return this.burgerPiece;
+	}
+
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 * @param bp 
+	 * @return 
+	 *
+	 */
+	public Burger depress(Burger bp) {
+		Burger depressedBurg = new Burger(bp.getX(),bp.getY()+10,bp.getType());
+		System.out.println("newRectangle");
+		return depressedBurg;
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#isPaused()
+	 */
+	@Override
+	public boolean isPaused() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}

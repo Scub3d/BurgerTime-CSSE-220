@@ -1,0 +1,89 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class Guard extends BurgTimeChar{
+	private double velocityX = 0.02;
+	private double velocityY =0.02;
+	private double centerX;
+	private double centerY;
+	private Point2D centerPoint;
+	private Color color = Color.MAGENTA;
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public Guard(Environment world, double centerX,double centerY) {
+		super(world);
+		this.centerX = centerX;
+		this.centerY = centerY;
+		setCenterPoint(centerPoint = new Point2D.Double(this.centerX,this.centerY));
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	
+	
+	
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param centerX2
+	 * @param centerY2
+	 * @return
+	 */
+	private Point2D Point2D(double centerX2, double centerY2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.BurgTimeChar#updatePosition()
+	 */
+	
+	@Override
+	public void updatePosition() {
+		//System.out.println("Updating");
+		if(Hero.getCenterY() < this.centerY ) //&& this.centerX == ladder.centerPoint().getX()) && the y is inbounds of the ladder;
+		{
+			this.centerY = this.centerY - (this.velocityY * GameWorld.UPDATE_INTERVAL_MS);
+		}
+		else if(Hero.getCenterY() > this.centerY) //&& this.centerX == ladder.centerPoint().getX());
+		{
+			this.centerY = this.centerY + (this.velocityY * GameWorld.UPDATE_INTERVAL_MS);
+		}
+		if(Hero.getCenterX() < this.centerX)// && this.centerY == platform.centerPoint.getY());
+		{
+			this.centerX = this.centerX - (this.velocityX * GameWorld.UPDATE_INTERVAL_MS);
+		}
+		else if(Hero.getCenterX() > this.centerX) //&&this.centerY == platform.centerPoint.getY());
+		{
+			this.centerX = this.centerX + (this.velocityX * GameWorld.UPDATE_INTERVAL_MS);
+		}
+		setCenterPoint(this.centerPoint = new Point2D.Double(this.centerX,this.centerY));
+	}
+	public void setCenterPoint(Point2D point){
+		//System.out.println("Setting point");
+		super.setCenterPoint(point);
+		this.centerX = point.getX();
+		this.centerY = point.getY();
+	}
+}

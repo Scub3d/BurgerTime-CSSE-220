@@ -1,0 +1,33 @@
+/**
+ * 
+ */
+package burgertime;
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+/**
+ * Creates the map and all aspects from the GameWorld.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public class GameGUI extends JFrame {
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public GameGUI(WorldPanel world) {
+		// TODO Auto-generated constructor stub
+		setTitle("BurgerTime");
+//		JPanel screen = new JPanel();
+//		screen.add(world);
+		add(world);
+		setResizable(false);
+		pack();
+	}
+	
+}

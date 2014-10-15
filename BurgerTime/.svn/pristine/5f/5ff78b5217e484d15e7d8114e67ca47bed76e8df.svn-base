@@ -1,0 +1,34 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class WorldPanel extends JPanel{
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param width
+	 * @param height
+	 * @param color
+	 */
+	public WorldPanel(int width, int height, Color color){
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		GameWorld world = new GameWorld(width, height, color);
+		GameWorldComponent worldComponent = new GameWorldComponent(world);
+		StatusPanel statusPanel = new StatusPanel(world);
+		add(worldComponent, BorderLayout.NORTH);
+		add(statusPanel, BorderLayout.SOUTH);
+	}
+}

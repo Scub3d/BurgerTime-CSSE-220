@@ -1,0 +1,81 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author solyss.
+ *         Created Feb 19, 2014.
+ */
+public class PowerUp implements Drawable{
+	private  Color color;
+	private  double y;
+	private  double x;
+	private  double width = 5;
+	private  double height = 5;
+	private int thirtySeconds = 30000;
+	private boolean taken = false;
+	
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param x
+	 * @param y
+	 * @param color
+	 */
+	public PowerUp(double x,double y,Color color)
+	{
+		this.x = x;
+		this.y = y;
+		this.color = color;
+	}
+	
+	public void updatePosition()
+	{
+		if(this.x == Hero.getCenterX() + Hero.getWidth() || this.x == Hero.getCenterX() - Hero.getWidth())
+		{
+			final Timer timer = new Timer(this.thirtySeconds, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					setTaken();
+				}
+			});
+			setTaken();
+			timer.start();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getShape()
+	 */
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public void setTaken(){
+		this.taken = !this.taken;
+	}
+	public boolean taken(){
+		return this.taken;
+	}
+	
+}

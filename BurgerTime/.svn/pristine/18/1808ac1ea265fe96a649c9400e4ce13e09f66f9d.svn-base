@@ -1,0 +1,37 @@
+1: User clicks Burger or presses <ENTER> to start game. Game Over screen appears
+   and another Burger appears to restart game.
+
+2: Level is created from text files once game is started.
+
+3: User presses arrow keys and hero moves in direction.
+
+4: User presses <SPACEBAR>: Pepper is used in facing direction, enemies are stunned,
+   Pepper count goes down 1.
+
+5: Enemy touches hero: Hero dies and game resets.
+
+6: As a result of death, game resets with life count down 1, score and pepper
+   are the same, food is in last known position. Hero and enemies are in original
+   positions.
+   
+7: User steps on food and falls through floor.
+
+8: Food falls to next floor. Smashes any enemies and knocks other food down if applicable.
+   Enemies on top of falling food die too.
+
+9: Enemy dies: Score increases. Reappears at highest floor after 3.5 seconds.
+   *Crushed results in 100 points, falling with food results in 500.
+
+10: Power Up collected: Add one to Pepper count. Add 150 points.
+
+11: Burger made: Add 250 points.
+
+12: All burgers made = level won. Next level created.
+
+13: Hero loses all lives; "Game Over" screen appears with Burger to restart.
+
+14: Pressing <U> moves to next level of game. Pressing <D> moves to previous level of game.
+
+15: Pressing <P> pauses the game.
+
+16: When level is created there are enemies and the hero in specific locations.

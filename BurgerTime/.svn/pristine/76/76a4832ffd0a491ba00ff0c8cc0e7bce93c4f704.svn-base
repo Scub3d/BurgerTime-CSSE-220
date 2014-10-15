@@ -1,0 +1,91 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 18, 2014.
+ */
+public class Burger implements Drawable{
+//	private Rectangle2D.Double burgerPiece = new Rectangle2D.Double();
+	protected int width=24;
+	protected int height=15;
+	private Color color;
+	private int xCoor;
+	private int yCoor;
+	private boolean isStepOn;
+	
+//	private int xCenter;
+//	private int yCenter;
+
+	
+	public Burger(int row, int col, char type){
+//		this.burgerPiece = new Rectangle2D.Double(row, col, this.width,this.height);
+		this.xCoor = col;
+		this.yCoor = row;
+		
+		
+		if(type =='t'||type=='b'){
+			this.color = Color.orange;
+		}else if(type == 'l'){
+			this.color = Color.green;
+		}else if(type=='m'){
+			this.color= new Color(160,82,45);
+		}
+//		setCenters(row, col, this.width, this.height);
+	}
+	
+	
+//	private void setCenters(int row, int col, int width2, int height2) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+//	public void updatePosition(){
+//		
+//	}
+	public void setStepOn(boolean value){
+		this.isStepOn=value;
+	}
+	
+	public boolean getStepOn(){
+		return this.isStepOn;
+	}
+	
+	public int getX(){
+		return this.xCoor;
+	}
+	
+	public int getY(){
+		return this.yCoor;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getShape()
+	 */
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

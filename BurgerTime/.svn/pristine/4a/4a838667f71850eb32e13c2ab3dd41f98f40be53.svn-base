@@ -1,0 +1,95 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author maas.
+ *         Created Feb 5, 2014.
+ */
+public class KeyboardHandler implements ActionListener{
+	
+	
+	private JButton burger() {
+		ActionListener start = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Start the game when you click the burger icon
+			}
+		};
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}public void keyReleased(KeyEvent arg0) {
+        // TODO Auto-generated method stub
+    }
+
+    public void keyPressed(KeyEvent e) {
+    	//char keyPressed = e.getKeyChar();
+    	if(keyPressed == 'p' || keyPressed == 'P')
+    	{
+    		//Pause the game
+    		
+//    		boolean isPaused = temporalObj.getIsPaused();
+//			isPaused = !isPaused;
+//			temporalObj.setIsPaused(isPaused);
+//			if (isPaused) {
+//				pauseResumeButton.setText("Resume");
+//			} else {
+//				pauseResumeButton.setText("Pause");
+//			}
+    	}
+    	else if(e.getKeyChar() == 'u' || e.getKeyChar() == 'U')
+    	{
+    		//Next level
+    	}
+    	else if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+    	{
+    		//Previous level
+    	}
+
+    	else if (e.getKeyCode() == KeyEvent.VK_UP) 
+    	{
+    		//move the character up
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+    	{
+    		//move the character left
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+    	{
+    		//move the character right
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+    	{
+    		//move the character down
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+    	{
+    		//spray the pepper spray
+    		//pepperSprayCount --;
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_ENTER) 
+    	{
+    		//start the game
+    	}
+
+         	
+    }
+}

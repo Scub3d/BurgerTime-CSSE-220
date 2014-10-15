@@ -1,0 +1,208 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+
+
+
+/**
+ * TODO Put here a description of what this class does.
+ * 
+ * @author havensid. Created Feb 6, 2014.
+ */
+public class GameWorldComponent extends JComponent implements Temporal {
+	private static final int FRAMES_PER_SECOND = 30;
+	private static final long INTERVAL_MS = 1000 / FRAMES_PER_SECOND;
+	private CopyOfGameWorldEnvironment map;
+	private Environment world;
+	public Hero hero;
+	// private Runnable[] guard;
+	//private ArrayList<Drawable> drawableParts;
+	private ArrayList<Rectangle2D> position;
+	private boolean hasShownNullErrorMessage = false;
+
+	// private Level level;
+
+	public GameWorldComponent(CopyOfGameWorldEnvironment map, Environment world) {
+		this.map = map;
+		this.world = world;
+		// this.level = new Level();
+		// this.level.loadLevel();
+
+		// this.hero = new Hero();
+		Runnable repainter = new Runnable() {
+			public void run() {
+				try {
+					while (true) {
+						Thread.sleep(INTERVAL_MS);
+						repaint();
+						timePassed();
+					}
+				} catch (InterruptedException exception) {
+					//
+				}
+			}
+		};
+		new Thread(repainter).start();
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+
+//		for (int lives = 1; lives <= this.hero.lives; lives++) {
+//			g2.setColor(this.hero.getColor());
+//			Rectangle2D.Double life = new Rectangle2D.Double(30 * lives + 10,
+//					500, 20, 40);
+//			g2.fill(life);
+//		}
+
+		for (int i = 0; i < this.map.path.size(); i++) {
+			this.drawPathway(g2, this.map.path.get(i));
+			
+		}
+
+//		List<Drawable> drawableParts = this.world.getDrawableParts();
+//		for (Drawable d : drawableParts) {
+//			drawDrawable(g2, d);
+		}
+
+//		for (Burger d : this.burger) {
+//			this.drawBurger(g2, d);
+//		}
+
+//		if (this.hero.pepperDeployed) {
+//			g2.setColor(new Color(150, 130, 10, 155));
+//			g2.fill(this.hero.deployPepperSpray());
+//		}
+//	}
+
+	/**
+	 * This helper method draws the given drawable object on the given graphics
+	 * area.
+	 * 
+	 * @param g2
+	 *            the graphics area on which to draw
+	 * @param d
+	 *            the drawable object
+	 */
+	private void drawDrawable(Graphics2D g2, Drawable d) {
+		Color color = d.getColor();
+		if (color == null) {
+			showNullPointerMessage("color", d);
+			return;
+		}
+		Shape shape = d.getShape();
+		if (shape == null) {
+			showNullPointerMessage("shape", d);
+			return;
+		}
+		g2.fill(shape);
+	}
+	
+	/**
+	 * Displays an error message explaining that the Ball's color/shape was null
+	 * so it could not be drawn. Show the message only once per component.
+	 */
+	private void showNullPointerMessage(String nullAttribute, Drawable d) {
+		if (!this.hasShownNullErrorMessage) {
+			this.hasShownNullErrorMessage = true;
+			String message = "I could not draw this Drawable object of type "
+					+ d.getClass().getName() + " because its " + nullAttribute
+					+ " is null.\n";
+			JOptionPane.showMessageDialog(null, message,
+					"Null pointer exception", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void drawPathway(Graphics2D g2, Rectangle2D pathSegment) {
+		g2.setColor(this.map.getColor());
+		g2.fill(pathSegment);
+	}
+
+//	private void drawBurger(Graphics2D g2, Burger burger) {
+//		Rectangle2D[][] shape = burger.getShape();
+//		Color[] color = burger.getColor();
+//		for (int i = 0; i < shape.length; i++) {
+//			for (int j = 0; j < shape[i].length; j++) {
+//				g2.setColor(color[i]);
+//				g2.fill(shape[i][j]);
+//			}
+//		}
+//	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see burgertime.Temporal#timePassed()
+	 */
+//	@Override
+//	public void timePassed() {
+//		if (!this.hero.pepperDeployed) {
+//			if (this.hero.contactWithGuard(this.hero.getHeroCorners(0, 0))) {
+//				this.hero.die();
+//			}
+//		}
+//		if (this.hero.isDead()) {
+//			this.resetCharacters();
+//			this.hero.heroState = false;
+//		}
+//
+//	}
+//
+//	public void resetCharacters() {
+//		this.hero.resetPosition();
+//		for (int i = 0; i < guard.length; i++) {
+//			((Guard) this.guard[i]).resetPosition();
+//		}
+//	}
+
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#die()
+	 */
+	@Override
+	public void die() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#setIsPaused(boolean)
+	 */
+	@Override
+	public void setIsPaused(boolean isPaused) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#getIsPaused()
+	 */
+	@Override
+	public boolean getIsPaused() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#timePassed()
+	 */
+	@Override
+	public void timePassed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

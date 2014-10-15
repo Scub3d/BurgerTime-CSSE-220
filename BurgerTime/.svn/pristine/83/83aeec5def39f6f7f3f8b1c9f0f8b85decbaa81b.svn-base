@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.util.List;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public interface GameWorldEnvironment {
+	boolean isInsideWorldX();
+	boolean isInsideWorldY();
+	boolean isInsideWorld();
+	public List<Drawable> getDrawableParts();
+}

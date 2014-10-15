@@ -1,0 +1,92 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class StatusPanel extends JPanel{
+	
+
+	private int frameWidth;
+	private int frameHeight;
+	public static int scoreValue=0;
+	public static int liveCount=4;
+	public static int pepperCount=5;
+	public static JPanel panel;
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public StatusPanel(int width, int height) {
+		this.panel = new JPanel();
+		this.frameHeight=height;
+		this.frameWidth=width;
+		this.panel.setLayout(new GridLayout(1, 3));
+		this.panel.setSize(this.frameWidth, this.frameHeight / 30);
+		//this.panel.setPreferredSize( new Dimension(this.frameWidth, this.frameHeight/30));
+		this.panel.setVisible(true);
+		System.out.println("This panel got initialezed;aldsfjaf;asldkjfapdsgas;jg");
+		
+		
+//		JLabel lives = new JLabel();
+//		lives.setText("Lives: "+liveCount);
+//		this.add(lives);
+//		
+//		JLabel score = new JLabel();
+//		score.setText("Score: "+scoreValue);
+//		this.add(score);
+//		
+//		JLabel pepper = new JLabel();
+//		pepper.setText("Pepper: "+pepperCount);
+//		this.add(pepper);
+		
+	}
+	public static void updatePanel()
+	{
+		//System.out.println("The panel was updated");
+		JLabel lives = new JLabel();
+		lives.setText("Lives: "+liveCount);
+		panel.add(lives);
+		
+		JLabel score = new JLabel();
+		score.setText("Score: "+scoreValue);
+		panel.add(score);
+		
+		JLabel pepper = new JLabel();
+		pepper.setText("Pepper: "+pepperCount);
+		panel.add(pepper);
+		panel.setVisible(true);
+	}
+	public static int getPepper()
+	{
+		return pepperCount;
+	}
+	public static void setPepper(int pCount)
+	{
+		pepperCount +=pCount;
+	}
+	public static int getLives()
+	{
+		return liveCount;
+	}
+	public static void setLives(int life)
+	{
+		liveCount -=life;
+	}
+
+}

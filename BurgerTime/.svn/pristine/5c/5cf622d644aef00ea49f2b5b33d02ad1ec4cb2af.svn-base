@@ -1,0 +1,99 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class StatusPanel extends JPanel{
+	
+
+	private int frameWidth;
+	private int frameHeight;
+	public static int scoreValue=0;
+	public static int liveCount=4;
+	public static int pepperCount=5;
+	public static JPanel panel;
+	private static JLabel lives=new JLabel();
+	private static JLabel score=new JLabel();
+	private static JLabel pepper=new JLabel();
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public StatusPanel(int width, int height) {
+		panel = new JPanel();
+		this.frameHeight=height;
+		this.frameWidth=width;
+		panel.setLayout(new GridLayout(1, 3));
+		panel.setSize(this.frameWidth, this.frameHeight / 30);
+		//this.panel.setPreferredSize( new Dimension(this.frameWidth, this.frameHeight/30));
+		panel.setVisible(true);
+		System.out.println("This panel got initialezed;aldsfjaf;asldkjfapdsgas;jg");
+		
+		
+		
+		lives.setText("Lives: "+liveCount);
+		this.add(lives);
+		
+		score.setText("Score: "+scoreValue);
+		this.add(score);
+		
+		pepper.setText("Pepper: "+pepperCount);
+		this.add(pepper);
+		
+	}
+	public static void updatePanel()
+	{
+		//System.out.println("The panel was updated");
+
+	}
+	public static int getPepper()
+	{
+		return pepperCount;
+	}
+	public static void setPepper(int pCount)
+	{
+		pepperCount +=pCount;
+		pepper.setText("Pepper: "+pepperCount);
+	}
+	public static int getLives()
+	{
+		return liveCount;
+	}
+	public static void setLives(int life)
+	{
+		liveCount -=life;
+		lives.setText("Lives: "+liveCount);
+		
+	}
+	public static void setScore(int scoreToAdd)
+	{
+		scoreValue += scoreToAdd;
+		score.setText("Score: "+scoreValue);
+		
+	}
+	public static void gameReset(){
+		liveCount=4;
+		pepperCount=5;
+		scoreValue=0;
+		lives.setText("Lives: "+liveCount);
+		pepper.setText("Pepper: "+pepperCount);
+		score.setText("Score: "+scoreValue);
+	}
+
+}

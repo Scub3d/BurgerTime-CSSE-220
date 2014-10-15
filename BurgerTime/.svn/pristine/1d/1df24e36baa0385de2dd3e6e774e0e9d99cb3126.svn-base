@@ -1,0 +1,216 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public class CopyOfGameWorldEnvironment implements Drawable, Temporal, Environment{
+	private static final long UPDATE_INTERVAL_MS=10;
+	private Shape background;
+	private static boolean isPaused = false;
+	public ArrayList<Rectangle2D> path;
+	private ArrayList<Drawable> movingParts;
+	final static List<Guard> guards = new ArrayList<Guard>();
+	private final List<Guard> guardsToAdd = new ArrayList<Guard>();
+	private final List<Guard> guardsToRemove = new ArrayList<Guard>();
+	private final List<BurgTimeChar> heroes = new ArrayList<BurgTimeChar>();
+	final static List<Boolean> guardPeppered = new ArrayList<Boolean>();
+	private Hero hero = new Hero(this.map,300,150);
+	private Environment map;
+	private Color color;
+	public static Level level;
+	private static List <Level> levels = new ArrayList<Level>();
+	static int levelChooser = 0;
+	private final List<Point2D>corners = new ArrayList<Point2D>();
+	private int frameWidth;
+	private int frameHeight;
+	
+	public CopyOfGameWorldEnvironment(int width, int height){
+		this.frameWidth = width;
+		this.frameHeight = height;
+		this.color = color;
+		this.path = new ArrayList<Rectangle2D>();
+		this.addPathway();
+		
+		corners.add(0,new Point2D.Double(0, 0));
+		corners.add(1,new Point2D.Double(Main.getWidth(), 0));
+		corners.add(2,new Point2D.Double(0, Main.getHeight()));
+		corners.add(3,new Point2D.Double(Main.getWidth(), Main.getHeight()));
+		
+		for(int  i=0; i<4; i++)
+		{
+			this.guards.add(i,new Guard(this.map,0,0));
+			this.guards.get(i).setCenterPoint(this.level.getCorners(i + 1));
+			this.guardPeppered.add(i,false);
+			System.out.println("Guard centerpoint is" + this.guards.get(i).getCenterPoint());
+		}
+		//System.out.println(this.guards);
+		//System.out.println("Hero centerpoint is" + this.hero.getCenterPoint());
+		// Creates a separate "thread of execution" to inform this world of the
+				// passage of time.
+				Runnable tickTock = new Runnable() {
+					@Override
+					public void run() {
+						try {
+							while (true) {
+								Thread.sleep(UPDATE_INTERVAL_MS);
+								timePassed();
+							}
+						} catch (InterruptedException exception) {
+							// Stop when interrupted
+						}
+					}
+				};
+				new Thread(tickTock).start();
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 */
+	private void addPathway() {
+		levels.add(0, new Level("res/BurgerTimeLevel2.txt", 20, 28));
+		levels.add(1, new Level("res/BurgerTimeLevel3.txt", 20, 28));
+		levels.add(2, new Level("res/BurgerTimeLevel1.txt", 20, 28));
+		this.level = levels.get(levelChooser);
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#timePassed()
+	 */
+	@Override
+	public void timePassed() {
+		// TODO Auto-generated method stub
+		if (!this.isPaused) {
+			for (Temporal t : this.guards) {
+				t.timePassed();
+				this.hero.timePassed();
+			}
+		}
+		this.guards.removeAll(this.guardsToRemove);
+		this.guardsToRemove.clear();
+		this.guards.addAll(this.guardsToAdd);
+		this.guardsToRemove.clear();
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#die()
+	 */
+	@Override
+	public void die() {
+		// ignored
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#setIsPaused(boolean)
+	 */
+	@Override
+	public void setIsPaused(boolean isPaused) {
+		// TODO Auto-generated method stub
+		this.isPaused = isPaused;
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#getIsPaused()
+	 */
+	@Override
+	public boolean getIsPaused() {
+		// TODO Auto-generated method stub
+		return isPaused;
+	}
+	public static void setPaused(boolean Paused) {
+		// TODO Auto-generated method stub
+		CopyOfGameWorldEnvironment.isPaused = Paused;
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Temporal#getIsPaused()
+	 */
+	public static boolean getPaused() {
+		// TODO Auto-generated method stub
+		return CopyOfGameWorldEnvironment.isPaused;
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	@Override
+	public Color getColor() {
+		//this changes the color of all objects in environment to same color
+		return this.color;
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getShape()
+	 */
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return this.path.get(0);
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Environment#addGuard(burgertime.BurgTimeChar)
+	 */
+	@Override
+	public void addGuard(Guard guard) {
+		// TODO Auto-generated method stub
+		this.guardsToAdd.add(guard);
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Environment#removeChar(burgertime.BurgTimeChar)
+	 */
+	@Override
+	public void removeChar(Guard guard) {
+		// TODO Auto-generated method stub
+		this.guardsToRemove.remove(guard);
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.Environment#isInsideWorldX(java.awt.geom.Point2D)
+	 */
+	@Override
+	public boolean isInsideWorldX(Point2D point) {
+		// TODO Auto-generated method stub
+		return this.map.isInsideWorld(point);
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Environment#isInsideWorldY(java.awt.geom.Point2D)
+	 */
+	@Override
+	public boolean isInsideWorldY(Point2D point) {
+		// TODO Auto-generated method stub
+		return this.map.isInsideWorldY(point);
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Environment#isInsideWorld(java.awt.geom.Point2D)
+	 */
+	@Override
+	public boolean isInsideWorld(Point2D point) {
+		// TODO Auto-generated method stub
+		return this.map.isInsideWorld(point);
+	}
+	/* (non-Javadoc)
+	 * @see burgertime.Environment#getDrawableParts()
+	 */
+	@Override
+	public List<Drawable> getDrawableGuards() {
+		// TODO Auto-generated method stub
+		return new ArrayList<Drawable>(this.guards);
+	}
+	@Override
+	public List<Drawable> getDrawableHero()
+	{
+		return new ArrayList<Drawable>(this.heroes);
+	}
+	
+	public Hero getHero()
+	{
+		return this.hero;
+	}
+}

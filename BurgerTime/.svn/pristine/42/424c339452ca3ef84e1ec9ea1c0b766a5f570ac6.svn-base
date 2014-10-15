@@ -1,0 +1,29 @@
+package burgertime;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+
+
+/**
+ * @author Your team number and names here and in all your code files
+ */
+public class Main {
+	private static final int WIDTH = 0;
+	private static final int HEIGHT = 0;
+	private static final Color BACKGROUND_COLOR = Color.black;
+//	private static final Color FLOOR_COLOR = Color.cyan;
+//	private static final Color LADDER_COLOR = Color.white;
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Add code here.  Create any other needed methods in this class, 
+		//      and any other classes that you need.
+		GameWorld world = new GameWorld(WIDTH, HEIGHT, BACKGROUND_COLOR);
+		JFrame frame = new GameWorldsFrame(world);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
+}

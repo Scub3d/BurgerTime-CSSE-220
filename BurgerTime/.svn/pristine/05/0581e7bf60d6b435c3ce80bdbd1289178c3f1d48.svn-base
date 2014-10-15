@@ -1,0 +1,54 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class StatusPanel extends JPanel{
+	
+
+	private int frameWidth;
+	private int frameHeight;
+	public int scoreValue=0;
+	public int liveCount=4;
+	public int pepperCount=5;
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public StatusPanel(int width, int height) {
+		
+		this.frameHeight=height;
+		this.frameWidth=width;
+		this.setLayout(new GridLayout(1, 3));
+		this.setPreferredSize( new Dimension(this.frameWidth, this.frameHeight/30));
+		JLabel lives = new JLabel();
+		lives.setText("Lives: "+liveCount);
+		this.add(lives);
+		
+		JLabel score = new JLabel();
+		score.setText("Score: "+scoreValue);
+		this.add(score);
+		
+		JLabel pepper = new JLabel();
+		pepper.setText("Pepper: "+pepperCount);
+		this.add(pepper);
+		
+	}
+
+}

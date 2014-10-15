@@ -1,0 +1,118 @@
+package burgertime;
+
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import burgertime.Temporal;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author maas.
+ *         Created Feb 4, 2014.
+ */
+public class KeyboardHandler{
+	
+	private JPanel panel;
+	private static final long UPDATE_INTERVAL_MS=10;
+
+	public KeyboardHandler(JPanel panel,Hero hero)
+	{
+		this.panel = panel;
+		this.bindKeys(hero);
+	}
+	
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param hero
+	 */
+	private void bindKeys(Hero hero) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	
+	public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+    }
+
+    public void keyPressed(KeyEvent e,final Temporal temporalObj) {
+    	if(e.getKeyChar() == 'u' || e.getKeyChar() == 'U')
+    	{
+    		//Next level
+    	}
+    	else if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+    	{
+    		//Previous level
+    	}
+    	else if(e.getKeyChar() == 'p' || e.getKeyChar() == 'P')
+    	{
+    		boolean isPaused = temporalObj.getIsPaused();
+			isPaused = !isPaused;
+    	}
+
+    	else if (e.getKeyCode() == KeyEvent.VK_UP) 
+    	{
+    		//move the character up
+//    		double xCoordinate = Hero.getCenterX();
+//    		double yCoordinate = Hero.getCenterY();
+//    		//for loop to cycle through all the ladders
+//    		if(xCoordinate == ladder(i).getCenterPoint.getX() && )//
+//    		{
+//    			double newYCoordinate = Hero.centerY + (Hero.velocityY * GameWorld.UPDATE_INTERVAL_MS);
+//    			Hero.setCenterPoint(new Point2D.Double(xCoordinate, newYCoordinate);
+//    		}
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+    	{
+    		//move the character left
+//    		double yCoordinate = hero.getCenterPoint.getY();
+//    		if(yCoordinate == platform.getCenterPoint.getY())
+//    		{
+//    			double newXCoordinate = hero.getCenterPoint.getX() - 0.5;
+//    			hero.setCenterPoint(new POint2D.Double(newXCoordinate, yCoordinate));
+//    		}
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+    	{
+    		//move the character right
+//    		double yCoordinate = hero.getCenterPoint.getY();
+//    		if(yCoordinate == platform.getCenterPoint.getY())
+//    		{
+//    			double newXCoordinate = hero.getCenterPoint.getX() + 0.5;
+//    			hero.setCenterPoint(new POint2D.Double(newXCoordinate, yCoordinate));
+//    		}
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+    	{
+    		//move the character down
+    		//double xCoordinate = hero.getCenterPoint.getX();
+//    		if(xCoordinate == ladder.getCenterPoint.getX())
+//    		{
+//    			double newYCoordinate = hero.getCenterPoint.getY() - 0.5;
+//    			hero.setCenterPoint(new Point2D.Double(xCoordinate, newYCoordinate));
+//    			
+//    		}
+    	}
+    	else if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+    	{
+    		//spray the pepper spray
+    		//pepperSprayCount --;
+//    		if(enemy.getCenterPoint().getX() == chef.getCenterPoint().getX() + 1)
+//    		{
+//    			enemy.die();
+//    		}
+    	}       	
+    }
+}

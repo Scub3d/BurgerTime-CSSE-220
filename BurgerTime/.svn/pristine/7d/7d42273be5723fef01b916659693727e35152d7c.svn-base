@@ -1,0 +1,90 @@
+
+package burgertime;
+
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 12, 2014.
+ */
+public class Level {
+	
+	private String filename;
+	private int width;
+	private int height;
+	// -: null spaces, H: ladders, C: hero/chef, E: enemies, _: floor tiles below null spaces, ~: floor tiles below ladders
+	private char[] objs = {'-','H','C','E','_', '~'};
+	private char[][] levelConverted;
+	
+	/**
+	 * Initializes the Level reader
+	 *
+	 * @param file
+	 * @param width
+	 * @param height
+	 */
+	public Level(String file, int width, int height) {
+		this.filename = file;
+		this.width = width;
+		this.height = height;
+		this.levelConverted = new char[this.width][this.height];
+	}
+		
+	/**
+	 * Reads the given file and creates a char[][] based off it.
+	 * This will be used for creating the level itself.
+	 *
+	 */
+	public void readFile() {
+        try  {  
+            File file = new File(this.filename);
+            Scanner in = new Scanner(file);
+            int lineNum = 0;
+
+            while (in.hasNextLine()) {
+                String line = in.nextLine();
+                for(int c = 0; c < line.length(); c++) {
+                	for(int i = 0; i < this.objs.length; i++) {
+                		if(line.charAt(c) == this.objs[i]) {
+                			this.levelConverted[lineNum][c] = this.objs[i];
+                		}
+                	}
+                }
+                lineNum ++;
+            }
+            for(int i = 0; i < this.levelConverted.length; i++) {
+            	for(int j = 0; j < this.levelConverted[0].length; j++) {
+            		System.out.print(this.levelConverted[i][j]);
+            	}
+            	System.out.println();
+            }
+            System.out.println(this.levelConverted);
+            in.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        	}  
+    }
+	
+	private Point[][] coors;
+	public void createCoors() {
+		this.coors = new Point[this.levelConverted.length][this.levelConverted[0].length];
+		 for(int i = 0; i < this.levelConverted.length; i++) {
+         	for(int j = 0; j < this.levelConverted[0].length; j++) {
+         		this.coors[i][j] = new Point(i * 24, j * 21);
+         	}
+		 }
+	}
+	
+	public void createLevel() {
+		// DO SHIT
+	}
+	// PUT BACK IN MAIN      
+	//Level level = new Level("res/BurgerTimeLevel1.txt", 20, 28);
+	//level.readFile();
+}

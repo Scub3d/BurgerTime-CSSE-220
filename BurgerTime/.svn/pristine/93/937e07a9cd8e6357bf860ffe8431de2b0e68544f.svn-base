@@ -1,0 +1,64 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 5, 2014.
+ */
+public class Hero extends BurgTimeChar {
+	private double velocityX;
+	private double velocityY;
+	private double centerX;
+	private double centerY;
+	private Point2D centerPoint;
+	private Color color = Color.YELLOW;
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public Hero(Environment world) {
+		super(world);
+		this.centerX = 50;
+		this.centerY = 50;
+		this.velocityX = 0.1;
+		this.velocityY = 0.1;
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.Drawable#getColor()
+	 */
+	
+	@Override
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.BurgTimeChar#updatePosition()
+	 */
+	
+	@Override
+	public void updatePosition() {
+		// TODO Auto-generated method stub
+		this.centerX = this.centerX + (this.velocityX * GameWorld.UPDATE_INTERVAL_MS);
+		this.centerY = this.centerY + (this.velocityY * GameWorld.UPDATE_INTERVAL_MS);
+		setCenterPoint(centerPoint = new Point2D.Double(this.centerX,this.centerY));
+	}
+	
+	@Override
+	public Point2D getCenterPoint() {
+		return this.centerPoint;
+	}
+
+	
+}

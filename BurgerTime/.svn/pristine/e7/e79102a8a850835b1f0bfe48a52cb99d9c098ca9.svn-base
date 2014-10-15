@@ -1,0 +1,92 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
+import java.sql.Time;
+
+import javax.swing.Timer;
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author havensid.
+ *         Created Feb 6, 2014.
+ */
+public class Guard extends BurgTimeChar{
+	private double velocityX = 23/20;
+	private double velocityY = 24/20;
+	private double centerX;
+	private double centerY;
+	private Point2D centerPoint;
+	private static Color color = Color.MAGENTA;
+	private Color sprayedColor = Color.GRAY;
+	final int twoSeconds = 2000;
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param world
+	 */
+	public Guard(Environment world, double centerX,double centerY) {
+		super(world);
+		this.centerX = centerX;
+		this.centerY = centerY;
+		setCenterPoint(this.centerPoint = new Point2D.Double(this.centerX,this.centerY));
+	}
+	
+	/* (non-Javadoc)
+	 * @see burgertime.BurgTimeChar#updatePosition()
+	 */
+	
+	@Override
+	public void updatePosition() {
+		int tempX = (int) (this.centerY / 24.0);
+		int tempY = (int) (this.centerX / 23.0);
+		if(Hero.getCenterY() < this.centerY && CopyOfGameWorldEnvironment.level.canGoUp(tempX, tempY))
+		{
+			this.centerY = this.centerY - this.velocityY ;
+		}
+		else if(Hero.getCenterY() > this.centerY && CopyOfGameWorldEnvironment.level.canGoDown(tempX, tempY))  
+		{
+			this.centerY = this.centerY + this.velocityY;
+		}
+		else if(Hero.getCenterX() < this.centerX && CopyOfGameWorldEnvironment.level.canGoLeft(tempX, tempY))
+		{
+			this.centerX = this.centerX - this.velocityX;
+		}
+		else if(Hero.getCenterX() > this.centerX && CopyOfGameWorldEnvironment.level.canGoRight(tempX, tempY))
+		{
+			this.centerX = this.centerX + this.velocityX;
+		}
+		
+		setCenterPoint(this.centerPoint = new Point2D.Double(this.centerX,this.centerY));
+		
+	}
+	@Override
+	public void setCenterPoint(Point2D point){
+		super.setCenterPoint(point);
+		this.centerX = point.getX();
+		this.centerY = point.getY();
+	}
+	public void isSprayed() throws InterruptedException{
+		final Timer timer = new Timer(this.twoSeconds, new ActionListener() {
+		    @Override
+			public void actionPerformed(ActionEvent evt) {
+		            setIsPaused(false);
+		            setColor(Color.MAGENTA);
+		    }    
+		});
+		
+		
+		setColor(this.sprayedColor);
+		setIsPaused(true);
+		this.isPaused = true;
+		timer.start();
+
+	}
+}

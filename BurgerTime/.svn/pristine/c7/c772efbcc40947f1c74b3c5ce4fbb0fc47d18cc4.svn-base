@@ -1,0 +1,180 @@
+/**
+ * 
+ */
+package burgertime;
+
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JPanel;
+
+
+/**
+ * TODO Put here a description of what this class does.
+ *
+ * @author maas.
+ *         Created Feb 16, 2014.
+ */
+public class KeyHandler extends JPanel{
+	//final Temporal temporalObj;
+	public KeyHandler(){
+		KeyListener listener = new KeyListener(){
+		//temporalObj.setIsPaused(isPaused);
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				//System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode())); 
+				int key = e.getKeyCode();
+				if(e.getKeyChar() == 'u' || e.getKeyChar() == 'U')
+		    	{
+		    		//Next level
+					System.out.println("Next Level");
+					if(CopyOfGameWorldEnvironment.levelChooser == 2)
+					{
+						System.out.println("You are at the last level.");
+					}
+					else
+					{
+						CopyOfGameWorldEnvironment.levelChooser++;
+					}
+		    	}
+		    	else if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+		    	{
+		    		//Previous level
+		    		System.out.println("Previous Level");
+		    		if(CopyOfGameWorldEnvironment.levelChooser == 0)
+					{
+						System.out.println("You are at the first level.");
+					}
+					else
+					{
+						CopyOfGameWorldEnvironment.levelChooser--;
+					}
+		    	}
+		    	else if(e.getKeyChar() == 'p' || e.getKeyChar() == 'P')
+		    	{
+		    		boolean paused = GameWorld.isItPaused();
+		    		if (paused) {
+						System.out.println("Paused");
+					} else {
+						System.out.println("Moving");
+					}
+		    		paused = !paused;
+		    		CopyOfGameWorldEnvironment.setPaused(paused);
+		    		if (paused) {
+						System.out.println("Paused");
+					} else {
+						System.out.println("Resume");
+					}
+		    	}
+				if(key == KeyEvent.VK_UP)
+				{
+					//System.out.println("UP");
+					Hero.setVelocityY(-1);
+					//System.out.println(Hero.getVelocityY());
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+		    	{
+		    		//System.out.println("LEFT");
+		    		Hero.setVelocityX(-1);
+		    		//for(char platorm: )
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+		    	{
+		    		///System.out.println("RIGHT");
+		    		Hero.setVelocityX(1);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+		    	{
+		    		//S/ystem.out.println("Down");
+		    		Hero.setVelocityY(1);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+		    	{
+		    		//spray the pepper spray
+		    		int pepperUsed = -1;
+		    		int pepperLeft = StatusPanel.getPepper();
+		    		if(pepperLeft == 0)
+		    		{
+		    			System.out.println("Out of pepperspray");
+		    		}
+		    		else
+		    		{
+		    			StatusPanel.setPepper(pepperUsed);
+		    			for(Guard c: CopyOfGameWorldEnvironment.guards)
+		    			{
+		    				if(Hero.getCenterX() + Hero.getWidth()  / 2  + 1*24 >= c.getCenterPoint().getX() - Hero.getWidth() / 2 && Hero.getCenterX() - Hero.getWidth() / 2 - 1*24 <= c.getCenterPoint().getX() + Hero.getWidth() / 2) 
+		    				{
+		    					if(Hero.getCenterY() + Hero.getHeight() / 2 + 1*24 >= c.getCenterPoint().getY() - Hero.getHeight() / 2 && Hero.getCenterY()  - Hero.getHeight() / 2 - 1*24 <= c.getCenterPoint().getY() + Hero.getHeight() / 2 ) 
+		    					{
+		    						System.out.println(c);
+		    						try {
+										c.isSprayed();
+									} catch (InterruptedException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+		    						
+		    					}
+		    				}
+		    			}
+//		    			for(int i=0;i<4;i++)
+//		    			{
+//		    				if(Hero.getCenterX() + Hero.getWidth()  / 2  + 1*24 >= CopyOfGameWorldEnvironment.guards.get(i).getX() - Hero.getWidth() / 2 && Hero.getCenterX() - Hero.getWidth() / 2 - 1*24 <= CopyOfGameWorldEnvironment.guards.get(i).getX() + Hero.getWidth() / 2) 
+//		    				{
+//		    					if(Hero.getCenterY() + Hero.getHeight() / 2 + 1*24 >= CopyOfGameWorldEnvironment.guards.get(i).getY() - Hero.getHeight() / 2 && Hero.getCenterY()  - Hero.getHeight() / 2 - 1*24 <= CopyOfGameWorldEnvironment.guards.get(i).getY() + Hero.getHeight() / 2 ) 
+//		    					{
+//		    						CopyOfGameWorldEnvironment.guards.get(i).setColour(Color.GRAY);
+//		    					}
+//		    				}
+//		    			}
+		    		}
+	    		}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				//System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+				int key = e.getKeyCode();
+				if(key == KeyEvent.VK_UP)
+				{
+					//System.out.println("UP");
+					Hero.setVelocityY(0);
+					//System.out.println(Hero.getVelocityY());
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+		    	{
+		    		//System.out.println("LEFT");
+		    		Hero.setVelocityX(0);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+		    	{
+		    		//System.out.println("RIGHT");
+		    		Hero.setVelocityX(0);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+		    	{
+		    		//System.out.println("Down");
+		    		Hero.setVelocityY(0);
+		    	}
+		    	else if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+		    	{
+		    		//ignored
+	    		}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		addKeyListener(listener);
+		setFocusable(true);
+		
+	}
+
+}
